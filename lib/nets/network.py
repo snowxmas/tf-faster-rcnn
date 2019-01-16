@@ -71,8 +71,8 @@ class Network(object):
       # change the channel to the caffe format
       to_caffe = tf.transpose(bottom, [0, 3, 1, 2])
       # then force it to have channel 2
-      reshaped = tf.reshape(to_caffe,
-                            tf.concat(axis=0, values=[[1, num_dim, -1], [input_shape[2]]]))
+      concatted = tf.concat( axis=0, values=[[1, num_dim, -1], [input_shape[2]]] )
+      reshaped = tf.reshape( to_caffe, concatted )
       # then swap the channel back
       to_tf = tf.transpose(reshaped, [0, 2, 3, 1])
       return to_tf
