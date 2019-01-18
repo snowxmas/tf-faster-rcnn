@@ -330,7 +330,8 @@ class Network(object):
     # change it so that the score has 2 as its channel size
     rpn_cls_score_reshape = self._reshape_layer(rpn_cls_score, 2, 'rpn_cls_score_reshape')
     rpn_cls_prob_reshape = self._softmax_layer(rpn_cls_score_reshape, "rpn_cls_prob_reshape")
-    rpn_cls_pred = tf.argmax(tf.reshape(rpn_cls_score_reshape, [-1, 2]), axis=1, name="rpn_cls_pred")
+    rpn_cls_score_reshape_reshaped = tf.reshape( rpn_cls_score_reshape, [-1, 2] )
+    rpn_cls_pred = tf.argmax(rpn_cls_score_reshape_reshaped, axis=1, name="rpn_cls_pred")
     rpn_cls_prob = self._reshape_layer(rpn_cls_prob_reshape, self._num_anchors * 2, "rpn_cls_prob")
     rpn_bbox_pred = slim.conv2d(rpn, self._num_anchors * 4, [1, 1], trainable=is_training,
                                 weights_initializer=initializer,
